@@ -13,6 +13,10 @@ const createWindow = () => {
     },
   });
 
+  isDev ? mainWindow.webContents.openDevTools() : "";
+
+  mainWindow.menuBarVisible = false;
+
   // and load the index.html of the app.
   mainWindow.loadFile("index.html");
 
