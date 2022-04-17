@@ -10,10 +10,16 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import ScreenShareOutlinedIcon from "@mui/icons-material/ScreenShareOutlined";
+import StopScreenShareOutlinedIcon from "@mui/icons-material/StopScreenShareOutlined";
 
 export default function MyAppBar() {
   const [showDrawer, setShowDrawer] = useState(false);
+  const [screenShare, setScreenShare] = useState(true);
+
+  const updateUiScreenShare = () => {
+    setScreenShare(!screenShare);
+  };
 
   const list = (
     <Box
@@ -23,12 +29,33 @@ export default function MyAppBar() {
       onKeyDown={() => setShowDrawer(false)}
     >
       <List>
-        <ListItem button key="About Us">
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="About Us" />
-        </ListItem>
+        {screenShare ? (
+          <ListItem
+            button
+            key="Share Screen"
+            onClick={() =>
+              window.shareScreenAPI.startSharing(updateUiScreenShare)
+            }
+          >
+            <ListItemIcon>
+              <ScreenShareOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Share Screen" />
+          </ListItem>
+        ) : (
+          <ListItem
+            button
+            key="Stop Share Screen"
+            onClick={() =>
+              window.shareScreenAPI.stopSharing(updateUiScreenShare)
+            }
+          >
+            <ListItemIcon>
+              <StopScreenShareOutlinedIcon />
+            </ListItemIcon>
+            <ListItemText primary="Stop Share Screen" />
+          </ListItem>
+        )}
       </List>
     </Box>
   );
